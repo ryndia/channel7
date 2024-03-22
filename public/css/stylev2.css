@@ -1,0 +1,51 @@
+.side_information_long_text_l2{
+	display: -webkit-box;
+  	-webkit-line-clamp: 11;
+  	-webkit-box-orient: vertical;
+  	overflow: hidden;
+  	height: 16rem;
+}
+
+
+.text_card_popular_l2{
+		display: -webkit-box;
+  	-webkit-line-clamp: 7;
+  	-webkit-box-orient: vertical;
+  	overflow: hidden;
+}
+
+.title{
+
+}
+
+.header {
+  padding: 10px 16px;
+  background: #555;
+  color: #f1f1f1;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: absolute sticky;
+  border-top-left-radius:1rem;
+  border-bottom-left-radius:1rem ;
+  background-color: black;
+  right:0;
+  margin-top: 3.5rem ;
+  margin-left:auto; 
+  width: 5rem;
+  height: 8rem;
+  z-index: 10;
+}
+
+.tv, .radio{
+	font-size: 2rem;
+	width: 5rem;
+	height: 4rem;
+}
