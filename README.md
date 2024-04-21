@@ -7,7 +7,6 @@ The "Channel 7" project introduced me to PHP, the MVC model, JavaScript, jQuery,
 Some screenshots of the app:
  # Home page
  ![plot](./screenshot/946shots_so.png)
- ![plot](./screenshot/528shots_so.png)
  ![plot](./screenshot/86shots_so.png)
 
  # Category Article
@@ -28,12 +27,16 @@ Some screenshots of the app:
  ![plot](./screenshot/428shots_so.png)
  ![plot](./screenshot/460shots_so.png)
  Edit Article and choose to display or not.
+ 
  ![plot](./screenshot/799shots_so.png)
  Approve Article to display, reserve to admin or reviewer account privilege.
+ 
  ![plot](./screenshot/366shots_so.png)
  Display on carousel.
+ 
  ![plot](./screenshot/860shots_so.png)
  Manage category and sub-category.
+ 
  ![plot](./screenshot/916shots_so.png)
 
  # Create Article
