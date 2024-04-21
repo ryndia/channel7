@@ -1,66 +1,53 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Channel 7
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+"Channel 7" is a Laravel project that was initially started for a client but was later canceled due to unforeseen reasons. The project was then continued as a showcase of my knowledge in the Laravel framework. Some of the code is not clean due to the pressure of quickly delivering code to the client. The project is currently being updated to achieve optimized status.
 
-## About Laravel
+The "Channel 7" project introduced me to PHP, the MVC model, JavaScript, jQuery, Meilisearch, MySQL, Docker, Composer, and Artisan.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Some screenshots of the app:
+ # Home page
+ ![plot](./screenshot/946shots_so.png)
+ ![plot](./screenshot/528shots_so.png)
+ ![plot](./screenshot/86shots_so.png)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+ # Category Article
+ ![plot](./screenshot/671shots_so.png)
+ ![plot](./screenshot/997shots_so.png)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+ # Sub-category Article
+ ![plot](./screenshot/861shots_so.png)
 
-## Learning Laravel
+ # Read Article
+ ![plot](./screenshot/176shots_so.png)
+ ![plot](./screenshot/150shots_so.png)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+ # Search Engine
+ ![plot](./screenshot/522shots_so.png)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+ # Adminstrator Page
+ ![plot](./screenshot/428shots_so.png)
+ ![plot](./screenshot/460shots_so.png)
+ Edit Article and choose to display or not.
+ ![plot](./screenshot/799shots_so.png)
+ Approve Article to display, reserve to admin or reviewer account privilege.
+ ![plot](./screenshot/366shots_so.png)
+ Display on carousel.
+ ![plot](./screenshot/860shots_so.png)
+ Manage category and sub-category.
+ ![plot](./screenshot/916shots_so.png)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+ # Create Article
+ ![plot](./screenshot/409shots_so.png)
+ Write article.
+ ![plot](./screenshot/163shots_so.png)
+ Preview the article on the website.
 
-## Laravel Sponsors
+ # Login and Account Management
+ ![plot](./screenshot/382shots_so.png)
+ ![plot](./screenshot/399shots_so.png)
+ ![plot](./screenshot/558shots_so.png)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+ # Mobile Preview
+ ![plot](./screenshot/994shots_so.png)
+ ![plot](./screenshot/940shots_so.png)
+ ![plot](./screenshot/513shots_so.png)

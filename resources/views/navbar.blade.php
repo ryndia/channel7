@@ -47,37 +47,13 @@
         </li>
         @foreach($navitem as $item)
         <li class="nav-item">
-          <a class="nav-link navbarItem active" aria-current="page" href="#">{{$item->name}}</a>
+          <a class="nav-link navbarItem active" aria-current="page" href="{{ route('section', ['category' => $item->id]) }}">{{$item->name}}</a>
         </li>
         @endforeach
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link navbarItem dropdown-toggle"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Dropdown
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li>
-              <a class="dropdown-item" href="#">Action</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Another action</a>
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </li>
-          </ul>
-        </li>
       </ul>
     </div>
     <div class="">
-      <form class="d-flex input-group w-auto">
+      <form action="{{ route('search')}}" method="GET" class="d-flex input-group w-auto">
         <div>
           <input
             id = "search_bar"
@@ -86,10 +62,11 @@
             placeholder="Search"
             aria-label="Search"
             aria-describedby="search-addon"
+            name="query"
             />
         </div>
         <div>
-          <button type="button" class="btn btn-primary border border-0 rounded-0" >
+          <button type="submit" class="btn btn-primary border border-0 rounded-0" >
             <i class="bi bi-search"></i>
           </button>
         </div>

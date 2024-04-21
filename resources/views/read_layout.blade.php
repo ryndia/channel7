@@ -1,5 +1,6 @@
 <div class="container">
   <div class="row">
+    <x-smart-ad-component slug="banner_article"/> 
     <div class="col-9">
       <hr>
       <div class="d-flex">
@@ -12,9 +13,9 @@
       </div>
       <div class="d-flex">
         <p class="editor_name" style="color: #F36677;">
-          {{ $writer->name }}
+           {{ $writer->name }}
         </p>
-        <p> / {{$role->level}} - </p>
+        <p> | {{$role->level}} - </p>
         <p class="date"></p>
         <div class="ms-auto social_logo_share d-flex mb-3">
           <a href="https://www.facebook.com/sharer/sharer.php?u=#url" target="_blank"><i class="ps-2 bi bi-facebook"></i></a>

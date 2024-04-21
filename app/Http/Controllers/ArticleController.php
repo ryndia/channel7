@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use Illuminate\Http\Request;
 
 use App\Models\Article;
 use App\Models\Category;
@@ -25,20 +26,55 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $article = Article::where('display',true)->
-        where('approved', true)->
-        whereNotExists(function ($query) {
-            $query->select(DB::raw(1))
-                ->from('category_article')
-                ->join('category', 'category_article.cID', '=', 'category.id')
-                ->whereColumn('article.id', 'category_article.aID')
-                ->where('category.name', '=', 'sidebar');
-        })->get();
+        //weather
+        //
+        $weather = Storage::disk('public')->get('weather/weather.json');
+        $weather = json_decode($weather);
+        $weatherDate = Storage::disk('public')->lastModified('weather/weather.json');
+        $weatherDate = date("Y-m-d H:i:s", $weatherDate);
+        $dateNow = strtotime(date("Y-m-d H:i:s"));
+        $weatherDate = strtotime($weatherDate);
+        $diffSeconds = $dateNow - $weatherDate;
 
-        foreach ($article as $value) {
-            $data = Storage::disk('public')->get($value->content);
-            $value->content = $data;
+        if ($diffSeconds > 3600) {
+           $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, "http://api.openweathermap.org/data/2.5/weather?id=934570&APPID=dc85cba77b61ab18d3eafac17674e939&units=metric");
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            $output = curl_exec($curl);
+            curl_close($curl);
+            Storage::put('weather/weather.json', $output);
+            $weather = json_decode($output);
         }
+
+        $category = Category_type::
+          where('name', '!=', 'sidebar')
+        ->where('name', '!=', 'opinion')
+        ->get();
+        $articlebyCat =[];
+        foreach($category as $c){
+            $article = Article::where('display',true)->
+            where('approved', true)->
+            whereExists(function ($query) use ($c)
+                {
+                    $query->select(DB::raw(1))
+                    ->from('category_article')
+                    ->join('category', 'category_article.cID', '=', 'category.id')
+                    ->whereColumn('article.id', 'category_article.aID')
+                    ->where('category.name', '!=', 'sidebar')
+                    ->where('category.id', $c->id);
+                })->get();
+
+            foreach ($article as $value) {
+                $data = Storage::disk('public')->get($value->content);
+                $value->content = $data;
+            }
+            $chunkedData = collect($article)->chunk(3)->map(function ($chunk) {
+                return $chunk->values();
+            });
+            $articlebyCat[$c->id] = $chunkedData;
+        }
+
+       // return $articlebyCat;
 
         $sidebar = Article::where('display',true)->
             where('approved', true)->
@@ -47,22 +83,54 @@ class ArticleController extends Controller
                 ->from('category_article')
                 ->join('category', 'category_article.cID', '=', 'category.id')
                 ->whereColumn('article.id', 'category_article.aID')
-                ->where('category.name', '=', 'sidebar');
+                ->where('category.name', '=', 'sidebar')
+                ->where('category.name', '!=', 'opinion');
             })->get();
 
         foreach ($sidebar as $value) {
             $data = Storage::disk('public')->get($value->content);
             $value->content = $data;
         }
-        $chunkedData = collect($article)->chunk(3);
+        $sidebar = collect($sidebar)->chunk(2)->map(function ($chunk) {
+                return $chunk->values();
+            });
 
-        $carousel = Article::where('carousel_display',true)->get();
+        $opinion = Article::where('display',true)->
+            where('approved', true)->
+            whereExists(function ($query) {
+            $query->select(DB::raw(1))
+                ->from('category_article')
+                ->join('category', 'category_article.cID', '=', 'category.id')
+                ->whereColumn('article.id', 'category_article.aID')
+                ->where('category.name', '!=', 'sidebar')
+                ->where('category.name', '=', 'opinion');
+            })->get();
+
+        $menu = Article::where('display',true)->
+            where('approved', true)->
+            whereExists(function ($query) {
+            $query->select(DB::raw(1))
+                ->from('category_article')
+                ->join('category', 'category_article.cID', '=', 'category.id')
+                ->join('subcategories', 'category_article.sID', '=', 'subcategories.id')
+                ->whereColumn('article.id', 'category_article.aID')
+                ->whereColumn('subcategories.cID', 'category.id' )
+                ->where('category.name', '=', 'Living')
+                ->where('subcategories.subcategory', '=', 'recipe')
+                ->orderBy('created_at','DESC');
+            })->first();
+        $menu->content = Storage::disk('public')->get($menu->content);
+
+
+        $carousel = Article::where('carousel_display',true)->where('display', true)->where('approved', true)->get();
         foreach ($carousel as $value) {
             $data = Storage::disk('public')->get($value->content);
             $value->content = $data;
         }
 
         $results = DB::table('category as c')
+            ->where('name', '!=', 'sidebar')
+            ->where('name', '!=', 'opinion')
             ->join('category_article as ca', 'c.id', '=', 'ca.cID')
             ->join('article as a', 'ca.aID', '=', 'a.id')
             ->join(DB::raw('(SELECT cID, MAX(a.created_at) AS max_date
@@ -77,9 +145,11 @@ class ArticleController extends Controller
             ->get();
 
         // Assuming the Article model is defined in the 'App\Models' namespace
-        $articles = Article::hydrate($results->toArray());
+        $articles = Article::hydrate($results->toArray())->where('display', true)->where('approved', true);
 
-        return view('home', ['data' => $chunkedData, 'sidebar' => $sidebar, 'carousel' => $carousel, 'perCat' => $articles]);
+
+        //return $sidebar;
+        return view('home', ['data' => $articlebyCat, 'category'=> $category, 'sidebar' => $sidebar, 'carousel' => $carousel, 'perCat' => $articles,'opinion' => $opinion, 'menu' => $menu, 'weather' => $weather]);
     }
 
     /**
@@ -101,34 +171,37 @@ class ArticleController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string'],
         ]);
-        $file_path = 'article/' .str_replace(' ', '_', $request->title) . "_" . (string)Auth::id() . $request->_token . "_text.txt";
-        $image_path = 'image/' . str_replace(' ', '_', $request->title) . "_" . (string)Auth::id() . $request->_token . "_image.";
-        $video_path = 'video/' . str_replace(' ', '_', $request->title) . "_" . (string)Auth::id() . $request->_token . "_video.";
-        $audio_path = 'audio/' . str_replace(' ', '_', $request->title) . "_" . (string)Auth::id() . $request->_token . "_audio.";
+        $file_path = 'article/'. str_replace(' ', '_', $request->title) . "_" . (string)Auth::id() . $request->_token . "_text.txt";
+        $image_path = str_replace(' ', '_', $request->title) . "_" . (string)Auth::id() . $request->_token . "_image.";
+        $video_path = str_replace(' ', '_', $request->title) . "_" . (string)Auth::id() . $request->_token . "_video.";
+        $audio_path = str_replace(' ', '_', $request->title) . "_" . (string)Auth::id() . $request->_token . "_audio.";
         Storage::put($file_path, $request->content);
 
         if($request->hasFile('image')){
-            $image_name = str_replace(' ', '_', $request->title) . "_" . (string)Auth::id() . "_image." . $request->file('image')->extension();
+            $image_name = str_replace(' ', '_', $request->title) . "_" . (string)Auth::id() . $request->_token . "_image." . $request->file('image')->extension();
             $image_path = $image_path . $request->file('image')->extension();
             Storage::putFileAs('image', $request->file('image'), $image_name);
+            $image_path = 'image/' . $image_path;
         }
         else{
             $image_path = null;
         }
 
         if($request->hasFile('video')){
-            $video_name = str_replace(' ', '_', $request->title) . "_" . (string)Auth::id() . "_video." . $request->file('video')->extension();
+            $video_name = str_replace(' ', '_', $request->title) . "_" . (string)Auth::id() . $request->_token . "_video." . $request->file('video')->extension();
             $video_path = $video_path . $request->file('video')->extension(); 
             Storage::putFileAs('video', $request->file('video'), $video_name);
+            $video_path = 'video/' . $video_path;
         }
         else{
             $video_path = null;
         }
 
         if($request->hasFile('audio')){
-            $audio_name = str_replace(' ', '_', $request->title) . "_" . (string)Auth::id() . "_audio." . $request->file('audio')->extension();
+            $audio_name = str_replace(' ', '_', $request->title) . "_" . (string)Auth::id() . $request->_token . "_audio." . $request->file('audio')->extension();
             $audio_path = $audio_path . $request->file('audio')->extension();
             Storage::putFileAs('audio', $request->file('audio'), $audio_name);
+            $audio_path = 'audio/' . $audio_path;
         }
         else{
             $audio_path = null;
@@ -552,14 +625,40 @@ class ArticleController extends Controller
                     ->where('subcategories.id', $sc->id);
             })
             ->orderBy('created_at', 'desc')
-            ->get();
-            array_push($subcatArticle, $subArticle);
+            ->take(5)->get();
+            $subcatArticle[$sc->id] = $subArticle;
         }
-        return $subcatArticle;
         //get the subcategory and latest news from the subcategory;
 
-
+       // return $subcatArticle;
         //get remaining article form the cat;
-        return view('section', ['article' => $article, 'category' => $category, 'subcategory' => $subCategory, 'remainingArticles' => $remainingArticles]);
+        return view('section', ['article' => $article, 'category' => $category, 'subcategory' => $subCategory, 'remainingArticles' => $remainingArticles, 'subcategoryArticle' => $subcatArticle]);
+    }
+
+    public function per_subcat_display(subcategory $subcategory){
+            $subArticle = Article::where('display', true)
+            ->where('approved', true)
+            ->whereExists(function ($query) use ($subcategory) {
+                $query->select(DB::raw(1))
+                    ->from('category_article')
+                    ->join('subcategories', 'category_article.sID', '=', 'subcategories.id')
+                    ->whereColumn('article.id', 'category_article.aID')
+                    ->where('subcategories.id', $subcategory->id);
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('subcategory',['subcategory' => $subcategory, 'subcategoryArticle' => $subArticle]);
+
+    }
+
+    public function search_article(Request $request){
+        $query = $request->input('query');
+        $articles = Article::search($query)->get(); // Retrieve search results
+        foreach ($articles as $value) {
+            $data = Storage::disk('public')->get($value->content);
+            $value->content = $data;
+        }
+        return view('search', ['article' => $articles]);
     }
 }
+

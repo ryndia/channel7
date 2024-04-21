@@ -10,22 +10,19 @@
 
     <!-- Right -->
     <div>
-      <a href="" class="me-4 text-reset">
-        <i class="bi bi-facebook-f"></i>
-      </a>
-      <a href="" class="me-4 text-reset">
-        <i class="bi bi-twitter"></i>
-      </a>
-      <a href="" class="me-4 text-reset">
+      <a href="https://www.facebook.com/ryndiax/" class="me-4 text-reset">
         <i class="bi bi-facebook"></i>
       </a>
-      <a href="" class="me-4 text-reset">
+      <a href="https://twitter.com/DindyalSarvesh" class="me-4 text-reset">
+        <i class="bi bi-twitter"></i>
+      </a>
+      <a href="https://www.instagram.com/ryndia_x/" class="me-4 text-reset">
         <i class="bi bi-instagram"></i>
       </a>
-      <a href="" class="me-4 text-reset">
+      <a href="https://www.linkedin.com/in/jeevesh-r-dindyal/" class="me-4 text-reset">
         <i class="bi bi-linkedin"></i>
       </a>
-      <a href="" class="me-4 text-reset">
+      <a href="https://wa.me/23057198900" class="me-4 text-reset">
         <i class="bi bi-whatsapp"></i>
       </a>
     </div>
@@ -48,42 +45,13 @@
         <!-- Grid column -->
         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
           <!-- Links -->
-          <h6 class="text-uppercase fw-bold mb-4">
-            Services
-          </h6>
-          <p>
-            <a href="#!" class="text-reset">service 1</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">service 2</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">service 3</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">service 4</a>
-          </p>
+          
         </div>
         <!-- Grid column -->
 
         <!-- Grid column -->
         <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
           <!-- Links -->
-          <h6 class="text-uppercase fw-bold mb-4">
-            Useful links
-          </h6>
-          <p>
-            <a href="#!" class="text-reset">Search</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">About</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">Web Radio</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">Help</a>
-          </p>
         </div>
         <!-- Grid column -->
 

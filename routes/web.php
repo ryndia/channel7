@@ -31,10 +31,14 @@ Route::post('comment', [CommentController::class, 'store'])->middleware(['auth',
 //     return view('section');
 // })->name('section');
 Route::get('section/{category}', [ArticleController::class, 'per_category_display'])->name('section');
+
+Route::get('subcategory/{subcategory}', [ArticleController::class, 'per_subcat_display'])->name('subcategory');
 //
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('search', [ArticleController::class, 'search_article'])->name('search');
 
 Route::middleware('auth','verified','admin')->group(function(){
     Route::get('/write', [ArticleController::class, 'create'])->name('write');
