@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('category', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('display');
+            $table->boolean('display')->default(0);
             $table->string('name');
         });
     }

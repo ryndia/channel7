@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('audio')->nullable();
             $table->boolean('display');
             $table->boolean('approved');
+            $table->boolean('carousel_display')->default(0);
             $table->dateTime('approved_time')->nullable();
             $table->unsignedBigInteger('writeby');
             $table->unsignedBigInteger('approvedby')->nullable();

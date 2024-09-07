@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoresubcategoryRequest;
 use App\Http\Requests\UpdatesubcategoryRequest;
-
 use App\Models\subcategory;
-use Illuminate\Http\Request;
 
 class SubcategoryController extends Controller
 {
@@ -33,8 +31,9 @@ class SubcategoryController extends Controller
     {
         $subcat = subcategory::create([
             'subcategory' => $request->subcategory,
-            'cID'         => $request->cat
+            'cID' => $request->cat,
         ]);
+
         return redirect('account');
     }
 
@@ -68,6 +67,7 @@ class SubcategoryController extends Controller
     public function destroy(subcategory $subcategory)
     {
         subcategory::where('id', $subcategory->id)->delete();
+
         return redirect('account');
     }
 }

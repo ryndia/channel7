@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
-use View;
 use App\Models\Category_type;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
+use View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,9 +23,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
-        View::composer('*', function($view)
-        {
-            $navitem = Category_type::where('display',1)->orderBy('name', 'asc')->get();
+        View::composer('*', function ($view) {
+            $navitem = Category_type::where('display', 1)->orderBy('name', 'asc')->get();
             $view->with('navitem', $navitem);
         });
     }

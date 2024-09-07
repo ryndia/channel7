@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCategory_typeRequest;
 use App\Http\Requests\UpdateCategory_typeRequest;
-use App\Models\Category_type;
 use App\Models\Category;
+use App\Models\Category_type;
 
 class CategoryTypeController extends Controller
 {
@@ -37,6 +37,7 @@ class CategoryTypeController extends Controller
         $category_type = Category_type::create([
             'name' => $request->category,
         ]);
+
         return redirect('account');
     }
 
@@ -69,23 +70,23 @@ class CategoryTypeController extends Controller
      */
     public function destroy(Category_type $category_type)
     {
-        if($category_type->name != "sidebar" && $category_type->name != "opinion"){
+        if ($category_type->name != 'sidebar' && $category_type->name != 'opinion') {
             Category::where('cID', $category_type->id)->delete();
             Category_type::where('id', $category_type->id)->delete();
         }
+
         return redirect('account');
     }
 
     public function display_catergory(UpdateCategory_typeRequest $request)
     {
-        foreach($request->all() as $key => $value)
-        {
-            if($key != "_token"){
-                if(str_contains($key,'cat_unapproved_')){
-                    $key = str_replace('cat_unapproved_', '',$key);
+        foreach ($request->all() as $key => $value) {
+            if ($key != '_token') {
+                if (str_contains($key, 'cat_unapproved_')) {
+                    $key = str_replace('cat_unapproved_', '', $key);
                     $category = Category_type::where('id', $key)->first();
-                    if($category){
-                        if($value == "on"){
+                    if ($category) {
+                        if ($value == 'on') {
                             $category->update([
                                 'display' => 0,
                             ]);
@@ -93,12 +94,11 @@ class CategoryTypeController extends Controller
                             $category->save();
                         }
                     }
-                }
-                else{
-                    $key = str_replace('cat_approved_', '',$key);
+                } else {
+                    $key = str_replace('cat_approved_', '', $key);
                     $category = Category_type::where('id', $key)->first();
-                    if($category){
-                        if($value == "on"){
+                    if ($category) {
+                        if ($value == 'on') {
                             $category->update([
                                 'display' => 1,
                             ]);
@@ -106,8 +106,9 @@ class CategoryTypeController extends Controller
                         }
                     }
                 }
-            }        
+            }
         }
+
         return redirect('account');
     }
 }

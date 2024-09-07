@@ -4,9 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class admin
 {
@@ -17,7 +17,7 @@ class admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(DB::table('user_admin')->where('uID', Auth::id())->exists()){
+        if (DB::table('user_admin')->where('uID', Auth::id())->exists()) {
             return $next($request);
         }
         abort(401);

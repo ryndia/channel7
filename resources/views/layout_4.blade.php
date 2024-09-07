@@ -184,7 +184,7 @@
 		        <div class="overflow-hidden" style="height: 17rem;">
 		          <img src="{{ asset('storage/' . $pc->image) }}">
 		        </div>
-		        <a href="{{ route('read', ['article' => $pc]) }}"><h3 class="title" style="margin-top: 0.7rem;">{{$pc->article_title}}</h3></a>
+		        <a href="{{ route('read', ['article' => $pc->article_id]) }}"><h3 class="title" style="margin-top: 0.7rem;">{{$pc->article_title}}</h3></a>
 		        <p class="te_card_popular side_bar">
 		        </p>
 		      </div>

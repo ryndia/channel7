@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class like extends Model
 {
     use HasFactory;
-    public $table = "like";
+
+    public $table = 'like';
 }

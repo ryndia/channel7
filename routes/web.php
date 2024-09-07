@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CategoryTypeController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubcategoryController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +19,9 @@ use App\Http\Controllers\SubcategoryController;
 |
 */
 
-Route::get('/',[ArticleController::class, 'index'])->name('home');
+Route::get('/', [ArticleController::class, 'index'])->name('home');
 
-Route::get('/home',[ArticleController::class, 'index'])->name('home');
+Route::get('/home', [ArticleController::class, 'index'])->name('home');
 
 Route::get('read/{article}', [ArticleController::class, 'show'])->name('read');
 
@@ -40,7 +40,7 @@ Route::get('/dashboard', function () {
 
 Route::get('search', [ArticleController::class, 'search_article'])->name('search');
 
-Route::middleware('auth','verified','admin')->group(function(){
+Route::middleware('auth', 'verified', 'admin')->group(function () {
     Route::get('/write', [ArticleController::class, 'create'])->name('write');
     Route::get('/edit/{article}', [ArticleController::class, 'edit'])->name('edit');
     Route::get('/delete/{article}', [ArticleController::class, 'destroy'])->name('delete');
@@ -57,7 +57,7 @@ Route::middleware('auth','verified','admin')->group(function(){
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/account',[AccountController::class, 'verify'])->name('account');
+    Route::get('/account', [AccountController::class, 'verify'])->name('account');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

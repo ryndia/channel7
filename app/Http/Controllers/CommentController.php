@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
-use App\Models\Comment;
 use App\Models\Article;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-
 
 class CommentController extends Controller
 {
@@ -23,10 +21,7 @@ class CommentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
@@ -39,6 +34,7 @@ class CommentController extends Controller
             'comment_text' => $request->comment,
         ]);
         $item = Article::find($request->id)->first();
+
         return redirect(route('read', ['article' => $item]));
     }
 
