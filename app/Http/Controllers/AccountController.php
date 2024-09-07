@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Article;
 use App\Models\Category_type;
 use App\Models\subcategory;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class AccountController extends Controller
 {
@@ -14,7 +14,7 @@ class AccountController extends Controller
     {
         if (Auth::id()) {
             $authenticatedUserId = Auth::id();
-            $admin = DB::table('user_admin')->where('uID', $authenticatedUserId)->first();
+            $admin = Admin::where('uID', $authenticatedUserId)->first();
             $category = Category_type::all();
             $subcat = subcategory::all();
             if ($admin) {
@@ -22,14 +22,16 @@ class AccountController extends Controller
                     $article = Article::all();
 
                     return view('dashboard_admin', ['article' => $article, 'admin' => $admin, 'category' => $category, 'sub' => $subcat]);
-                } else {
+                }
+
+                if ($admin->level == 'writer') {
                     $article = Article::where('writeby', Auth::id())->get();
 
                     return view('dashboard_admin', ['article' => $article,  'admin' => $admin, 'category' => $category]);
                 }
-            } else {
-                return view('dashboard');
             }
+
+            return view('dashboard');
         }
     }
 }

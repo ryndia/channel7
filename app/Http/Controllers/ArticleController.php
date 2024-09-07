@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use App\Models\Admin;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Category_type;
@@ -223,7 +224,7 @@ class ArticleController extends Controller
     {
         $exist = false;
         if (Auth::id()) {
-            $exist = DB::table('user_admin')->where('uID', Auth::id())->exists();
+            $exist = Admin::where('uID', Auth::id())->exists();
         }
         //category the article belong
         if (($article->approved && $article->display) || $exist) {
@@ -278,7 +279,7 @@ class ArticleController extends Controller
 
             //writer information
             $writer = User::where('id', $article->writeby)->first();
-            $role = DB::table('user_admin')->where('uID', $article->writeby)->first();
+            $role = Admin::where('uID', $article->writeby)->first();
 
             //count number of article published by writer
             $countArticle = Article::where('writeby', $article->writeby)->count();
